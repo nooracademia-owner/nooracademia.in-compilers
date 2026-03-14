@@ -724,13 +724,16 @@ class API {
     const contents = options.contents;
     const obj = options.obj;
     const opt = options.opt || '2';
+    const language = options.language || 'cpp'; // Default to cpp
 
     await this.ready;
     this.memfs.addFile(input, contents);
     const clang = await this.getModule(this.clangFilename);
+    // The -x flag requires 'c++', not 'cpp'
+    const languageForFlag = language === 'cpp' ? 'c++' : language;
     return await this.run(clang, 'clang', '-cc1', '-emit-obj',
                           ...this.clangCommonArgs, '-O2', '-o', obj, '-x',
-                          'c++', input);
+                          languageForFlag, input);
   }
 
   async compileToAssembly(options) {
@@ -796,14 +799,15 @@ class API {
     return stillRunning ? app : null;
   }
 
-  async compileLinkRun(contents, stdin) {
-    const input = `test.cc`;
+  async compileLinkRun(contents, stdin, language) {
+    const fileExtension = language === 'c' ? 'c' : 'cc';
+    const input = `test.${fileExtension}`;
     const obj = `test.o`;
     const wasm = `test.wasm`;
 
     this.memfs.setStdinStr(stdin || '');
 
-    await this.compile({input, contents, obj});
+    await this.compile({input, contents, obj, language});
     await this.link(obj, wasm);
 
     const buffer = this.memfs.getFileContents(wasm);
