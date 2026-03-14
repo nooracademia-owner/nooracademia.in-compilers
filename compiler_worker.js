@@ -1,14 +1,25 @@
 var Module = { locateFile: (path) => path };
-self.importScripts('shared.js');
+// Import pako for decompression, and then our shared API logic.
+self.importScripts('pako.min.js', 'shared.js');
 
 const apiOptions = {
+  // Point to the compressed clang binary. The API will use this filename.
+  clang: 'clang.gz',
   async readBuffer(filename) {
     const response = await fetch(filename); 
     return response.ok ? response.arrayBuffer() : new ArrayBuffer(0);
   },
   async compileStreaming(filename) {
     const response = await fetch(filename);
-    return WebAssembly.compile(await response.arrayBuffer());
+    const buffer = await response.arrayBuffer();
+
+    if (filename.endsWith('.gz')) {
+      // Decompress gzipped files in memory before compiling to WebAssembly.
+      const decompressed = pako.inflate(buffer);
+      return WebAssembly.compile(decompressed);
+    }
+    // For non-gzipped files, compile the buffer directly.
+    return WebAssembly.compile(buffer);
   },
   hostWrite(s) { 
     if (!s.includes('\x1b') && !s.toLowerCase().includes('done.')) {
