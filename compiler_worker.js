@@ -1,6 +1,7 @@
 var Module = { locateFile: (path) => path };
 // Import pako for decompression, and then our shared API logic.
-self.importScripts('pako.min.js', 'shared.js');
+// Load pako from a reliable CDN to avoid local hosting issues and potential 404 errors.
+self.importScripts('https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js', 'shared.js');
 
 const apiOptions = {
   // Point to the compressed clang binary. The API will use this filename.
