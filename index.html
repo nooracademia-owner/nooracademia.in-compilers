@@ -4,19 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C++ Compiler</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="icon" href="static/logo/favicon/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="static/logo/icon/icon.png">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://nooracademia-owner.github.io/noor-vault-assets/nooracademia/static/logo/favicon/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="https://nooracademia-owner.github.io/noor-vault-assets/nooracademia/static/logo/icon/icon.png">
+    <link rel="stylesheet" href="https://nooracademia-owner.github.io/noor-vault-assets/nooracademia/static/fonts.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="app-loader" class="app-loader">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <p>Initializing Editor & Compiler...</p>
+        </div>
+    </div>
+
     <header>
         <div class="header-wrapper">
             <div class="header-content">
-                <div class="logo">
-                    <img src="static/logo/logo.png" alt="Noor Academia Logo" class="header-logo">
+                <div class="logo-group">
+                    <img src="https://nooracademia-owner.github.io/noor-vault-assets/nooracademia/static/logo/logo.png" alt="Noor Academia Logo" class="header-logo">
+                    <span class="brand-name">NOOR ACADEMIA<sup>IN</sup></span>
                 </div>
                 <div class="header-divider"></div>
                 <h1>Online Compiler</h1>
@@ -27,9 +33,12 @@
                 </button>
                 <ul>
                     <li><a href="https://nooracademia.in/">Home</a></li>
-                    <li><a href="https://nooracademia.in/courses">Courses</a></li>
-                    <li><a href="https://nooracademia.in/about">About</a></li>
+                    <li><a href="https://nooracademia.in/#why-us">Why Us</a></li>
+                    <li><a href="https://nooracademia.in/#subjects">Subjects</a></li>
+                    <li><a href="https://nooracademia.in/lectures">Lectures</a></li>
+                    <li><a href="https://nooracademia.in/#mission">Mission</a></li>
                     <li><a href="https://nooracademia.in/contact">Contact</a></li>
+                    <li><a href="https://compiler.nooracademia.in/">Compiler</a></li>
                 </ul>
             </nav>
         </div>
@@ -98,7 +107,7 @@
         </div>
     </div>
     <!-- Monaco Editor Loader -->
-    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs/loader.js"></script>
+    <script src="https://nooracademia-owner.github.io/noor-vault-assets/nooracademia/static/vs/loader.js"></script>
     <script src="main.js"></script>
 </body>
 </html>

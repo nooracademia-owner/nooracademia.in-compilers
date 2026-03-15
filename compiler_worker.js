@@ -66,7 +66,11 @@ const apiOptions = {
 let api = new API(apiOptions);
 
 self.onmessage = async event => {
-  if (event.data.action === 'compile-and-run') {
+  if (event.data.action === 'constructor') {
+    // Signal back to the main thread that the worker is loaded and ready to receive commands.
+    self.postMessage({ type: 'ready' });
+  }
+  else if (event.data.action === 'compile-and-run') {
     try {
       // Pass language to compileLinkRun
       await api.compileLinkRun(event.data.contents, event.data.input, event.data.language);

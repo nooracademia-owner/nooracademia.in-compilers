@@ -1,0 +1,33 @@
+/*
+ * Local Poppins Font
+ *
+ * This file defines the @font-face rules for the locally-hosted Poppins font.
+ * The font files should be located in the 'fonts' subdirectory relative to this CSS file.
+ */
+
+/* Poppins Regular (400) - Latin */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://nooracademia-owner.github.io/noor-vault-assets/nooracademia/static/fonts/poppins-v20-latin-regular.woff2') format('woff2');
+}
+
+/* Poppins Medium (500) - Latin */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://nooracademia-owner.github.io/noor-vault-assets/nooracademia/static/fonts/poppins-v20-latin-500.woff2') format('woff2');
+}
+
+/* Poppins Semi-Bold (600) - Latin */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('https://nooracademia-owner.github.io/noor-vault-assets/nooracademia/static/fonts/poppins-v20-latin-600.woff2') format('woff2');
+}

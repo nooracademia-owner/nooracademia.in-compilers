@@ -1,5 +1,6 @@
 let worker;
 let executionTimeoutId = null;
+const appLoader = document.getElementById('app-loader');
 const EXECUTION_TIMEOUT = 5000; // 5 seconds
 const outputBox = document.getElementById('output');
 const stdinBox = document.getElementById('stdin-input');
@@ -20,6 +21,19 @@ const menuToggle = document.getElementById('menuToggle');
 const nav = document.querySelector('nav');
 const killButton = document.getElementById('killBtn');
 const spinner = document.getElementById('spinner');
+
+let editorReady = false;
+let workerReady = false;
+
+function hideLoaderIfReady() {
+    if (editorReady && workerReady) {
+        appLoader.classList.add('hidden');
+        // Optional: remove from DOM after transition to prevent interference
+        setTimeout(() => {
+            appLoader.style.display = 'none';
+        }, 500); // Must match CSS transition duration
+    }
+}
 
 function terminateExecution(message) {
     if (executionTimeoutId) {
@@ -56,6 +70,10 @@ function onWorkerMessage(e) {
             // This case is for future interactive input.
             const userInput = prompt("Program is requesting input (scanf):");
             worker.postMessage({ action: 'stdin-reply', value: (userInput || '') + '\n' });
+            break;
+        case 'ready':
+            workerReady = true;
+            hideLoaderIfReady();
             break;
         case 'done':
             if (executionTimeoutId) {
@@ -102,7 +120,7 @@ function decode(str) {
 }
 
 // Monaco Editor Integration
-require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs' } });
+require.config({ paths: { 'vs': 'https://nooracademia-owner.github.io/noor-vault-assets/nooracademia/static/vs' } });
 
 const defaultCode = {
     cpp: `#include <iostream>
@@ -168,6 +186,10 @@ require(['vs/editor/editor.main'], function () {
         }
     });
 
+    // Signal that the editor is ready and check if we can hide the loader
+    editorReady = true;
+    hideLoaderIfReady();
+
     // --- Event Listeners for Saving State ---
     editor.getModel().onDidChangeContent(() => {
         localStorage.setItem(LS_CODE_KEY_PREFIX + languageSelector.value, editor.getValue());
@@ -220,12 +242,14 @@ require(['vs/editor/editor.main'], function () {
     // --- Mobile Menu Logic ---
     menuToggle.addEventListener('click', (e) => {
         e.stopPropagation(); // Prevent click from bubbling to the document
-        nav.classList.toggle('active');
+        const isActive = nav.classList.toggle('active');
+        menuToggle.setAttribute('aria-expanded', isActive);
     });
 
     document.addEventListener('click', () => {
         if (nav.classList.contains('active')) {
             nav.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
         }
     });
 
