@@ -1,7 +1,7 @@
 let worker;
 let executionTimeoutId = null;
 const appLoader = document.getElementById('app-loader');
-const EXECUTION_TIMEOUT = 5000; // 5 seconds
+const EXECUTION_TIMEOUT = 60000; // 1 minute
 const outputBox = document.getElementById('output');
 const stdinBox = document.getElementById('stdin-input');
 const runButton = document.getElementById('runBtn');
@@ -261,7 +261,7 @@ require(['vs/editor/editor.main'], function () {
         spinner.classList.add('visible'); // Show spinner
 
         executionTimeoutId = setTimeout(() => {
-            terminateExecution("\n--- Execution timed out (5s). Potential infinite loop detected. ---\n");
+            terminateExecution("\n--- Execution timed out (60s). Potential infinite loop detected. ---\n");
         }, EXECUTION_TIMEOUT);
 
         const code = editor.getValue(); // Use getValue() for Monaco Editor
